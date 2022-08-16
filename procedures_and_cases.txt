@@ -146,7 +146,7 @@
         - use "return render(request, "index.html")" instead of "return HttpResponse("This is HOME page")"
 
 
-## sending 'data' into templates files 
+## sending 'data' into templates files [DONE]
     -> define a dictionary.
         * context = {
             "variable_1": "This is variable 1",
