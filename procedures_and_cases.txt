@@ -168,7 +168,8 @@
 
 
 
-## Adding HTML ELEMENTS from Bootstrap:
+## Adding HTML ELEMENTS from Bootstrap: [DONE, just copy-pasted 'starter code' 
+    and from: "https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog/03-Templates"]
     -> from "https://getbootstrap.com/docs/4.4/getting-started/introduction/"
         - copy-paste the 'starter code' into 'index.html' file 
         - "Hello World!" will be shown 
