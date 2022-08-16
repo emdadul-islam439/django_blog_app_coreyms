@@ -59,7 +59,7 @@
     -> [TRICK] just find-replace the old-name into new-name, where-ever you find the old-name. That's it!
 
 
-## Create app:
+## Create app: [DONE]
     -> go to the 'project' folder (if already not in the location)
         * cd basic_project
     -> write 'startapp' command
