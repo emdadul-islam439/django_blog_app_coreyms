@@ -66,12 +66,12 @@
         * python manage.py startapp basic_app
     -> That's it!
 
-## Create 'urls.py' in the basic_app:
+## Create 'urls.py' in the basic_app: [DONE]
     -> create 'urls.py' 
     -> copy the codes of 'basic_project/urls.py'
     -> paste the codes into the 'basic_app/urls.py'
 
-## Defining "path-variables":
+## Defining "path-variables": [DONE]
     -> first all the request comes to the 'basic_project/urls.py' file 
     -> then it can be directly send the user to a page
         OR, it will send the request to the 'basic_app/urls.py' file 
