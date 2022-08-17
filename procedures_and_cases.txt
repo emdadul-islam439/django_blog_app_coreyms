@@ -321,20 +321,7 @@
             -> "Custom Object(1)"
 
 
-## Show 'success' message:
-    -> after successfully submit data, show the 'success' message 
-        - in the 'basic_app/views.py' import 'django messages'
-        * "from django.contrib import messages"
-        - send success message:
-            -Example:
-            * def contact(request):
-            *    if request.method == 'POST':
-            *        ......
-            *        messages.success(request, "Your message has been sent successfully!")
-            *   return .....
-
-
-## Doing things in SHELL:
+## Doing things in SHELL: [DONE]
     -> in terminal write:
         * "python manage.py shell"
         - python interpreter will start 
@@ -354,3 +341,42 @@
         - Source: "https://docs.djangoproject.com/en/4.1/topics/db/queries/"
     
     -> type "exit()" if you want to exit from the 
+
+    -> MORE EXAMPLE: 
+        >>> from django.contrib.auth.models import User
+        >>> from blog.models import Post
+        >>> 
+        >>> User.objects.all()
+        <QuerySet [<User: admin>]>
+        >>> Post.objects.all()
+        <QuerySet []>
+        ----------------------------------------------------
+        >>> user = User.objects.all()[0]
+        >>> new_post = Post(title = "New Post title", content = "New post content", author = user)
+        >>> Post.objects.all()
+        <QuerySet []>
+        >>> new_post.save()
+        >>> Post.objects.all()
+        <QuerySet [<Post: New Post titile>]
+        ----------------------------------------------------
+        >>> user.post_set.all()
+        <QuerySet [<Post: New Post title>]>
+        >>> user.post_set.create(title = "Post title for new post", content="created post from the user.post_set")
+        <Post: Post title for new post>
+        >>> user.post_set.all()
+        <QuerySet [<Post: New Post title>, <Post: Post title for new post>]>
+        >>> Post.objects.all()
+        <QuerySet [<Post: New Post title>, <Post: Post title for new post>]>
+
+
+## Show 'success' message:
+    -> after successfully submit data, show the 'success' message 
+        - in the 'basic_app/views.py' import 'django messages'
+        * "from django.contrib import messages"
+        - send success message:
+            -Example:
+            * def contact(request):
+            *    if request.method == 'POST':
+            *        ......
+            *        messages.success(request, "Your message has been sent successfully!")
+            *   return .....
