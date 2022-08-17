@@ -468,3 +468,25 @@
                 </div>
             {% endfor %}
           {% endif %}
+
+
+## adding 'EMAIL' field into the USER CREATION FORM 
+    -> in the 'django_project/users' folder, create 'forms.py' file
+    -> add these lines of code 
+        * from django import forms
+          from django.contrib.auth.models import User
+          from django.contrib.auth.forms import UserCreationForm
+  
+          class UserRegisterForm(UserCreationForm):
+              email = forms.EmailField()
+              
+              class Meta:
+                  model = User 
+                  fields = ['username', 'email', 'password1', 'password2']
+    -> in the 'users/views.py' 
+        - import the 'forms.py' file
+            * from users.forms import UserRegisterForm
+        - replace all the 'UserCreationForm' by 'UserRegisterForm'
+        - remove the import of 'UserCreationForm'
+
+    -> That's it! the 'Email' Field is added successfully!
