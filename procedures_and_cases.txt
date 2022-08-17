@@ -309,7 +309,7 @@
         - see a table named "Contact" is showing up 
 
 
-## Showing our 'string' replacing "Custom Object(..)":
+## Showing our 'string' replacing "Custom Object(..)": [DONE]
     -> just return our string into the "__str__" function.
         - Example: 
         * def __str__(self) -> str:
