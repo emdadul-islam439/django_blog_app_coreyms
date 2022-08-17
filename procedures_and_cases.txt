@@ -183,7 +183,7 @@
         - from 'light' to 'dark'
 
 
-## "Migrating": Beginning:
+## "Migrating": Beginning: [DONE]
     -> first check if any migrations is pending now
         * "python manage.py makemigrations"
         - if nothing is pending, then show 
@@ -197,14 +197,14 @@
               Apply all migrations: admin, auth, contenttypes, sessions.....
 
 
-## Creating "SuperUser":
+## Creating "SuperUser": [DONE]
     -> write:
         * python manage.py createsuperuser
     -> Give the user-name/passwords
     -> That's it!
 
 
-## Changing "Django Administration" Site text:
+## Changing "Django Administration" Site text: [NOT NEEDED]
     -> in the 'basic_project/urls.py':
         - below the 'import section' add these lines
         * admin.site.site_header = "UMSRA Admin"
