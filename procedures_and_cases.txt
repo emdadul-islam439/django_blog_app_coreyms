@@ -381,6 +381,49 @@
             * <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
 
 
+
+## created USERS app:
+    -> created the 'users' app by the command:
+        * python manage.py startapp users 
+    -> register the app in 'django_project/settings.py'
+        * INSTALLED_APPS = [
+            ... ,
+            'users.apps.UsersConfig',
+            ... ,
+            ...
+         ]
+    -> created a file 'register.html':
+        - in 'templates' create a folder name 'users'
+        - in 'templates/users' created a file name 'index.html'
+        - copy-paste any template if-any
+            * {% extends "blog/base.html" %}
+              {% block content %}
+                  <div class="content-section">
+                      <form method="POST">
+                          {% csrf_token %}
+                          ........
+                      </form>
+                      <div class="border-top pt-3">
+                          ........
+                      </div>
+                  </div>
+              {% endblock content %}
+    
+    -> in 'users/views.py' create 'register' function:
+        * from django.contrib.auth.forms import UserCreationForm
+          def register(request):
+            form = UserCreationForm()
+            return render(request, "users/register.html", {'form': form})
+    
+    -> in 'django_project/urls.py' add another url
+        * from users import views as user_views
+          urlpatterns = [
+              ....... ,
+              path('register/', user_views.register, name = "register"),
+              ...
+          ]
+
+
 ## Show 'success' message:
     -> after successfully submit data, show the 'success' message 
         - in the 'basic_app/views.py' import 'django messages'
