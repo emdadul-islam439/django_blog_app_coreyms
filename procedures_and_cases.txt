@@ -424,14 +424,47 @@
           ]
 
 
+
+## working with the REGISTRATION form data:
+    -> STEP-1: in 'templates/users/register.html', modify this 
+        - from "{{ form }}" to "{{ form.as_p }}"
+        - this will make the form nicer
+
+    -> STEP-2: in 'users/views.py', modify the 'register' function:
+        * def register(request):
+            if request.method == 'POST':
+                form = UserCreationForm(request.POST)
+                if form.is_valid():
+                    username = form.cleaned_data.get('username')
+                    return redirect('blog-home')
+            else:
+                form = UserCreationForm()
+            return render(request, "users/register.html", {'form': form})
+
+        
+
 ## Show 'success' message:
     -> after successfully submit data, show the 'success' message 
-        - in the 'basic_app/views.py' import 'django messages'
+        - in the 'users/views.py' import 'django messages'
         * "from django.contrib import messages"
         - send success message:
             -Example:
-            * def contact(request):
+            * def register(request):
             *    if request.method == 'POST':
             *        ......
-            *        messages.success(request, "Your message has been sent successfully!")
+                    if form.is_valid():
+                        ......
+            *           messages.success(request, "Your message has been sent successfully!")
+                        ......
+                else:
+                    ......
             *   return .....
+    
+    -> in the 'templates/blog/base.html' add these lines
+        * {% if messages %}
+            {% for message in messages %}
+                <div class = "alert alert-{{message.tags}}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+          {% endif %}
