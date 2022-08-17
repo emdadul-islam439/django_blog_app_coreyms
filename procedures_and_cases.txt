@@ -369,6 +369,18 @@
         <QuerySet [<Post: New Post title>, <Post: Post title for new post>]>
 
 
+## CHANGE DATA REPRESENTATION: [DONE]
+    -> SOURCE: "https://docs.djangoproject.com/en/2.1/ref/templates/builtins/#date"
+        - "For example: {{ value|date:"D d M Y" }}"
+
+    -> to change the dates representation from "Aug. 17, 2022, 8:33 p.m." to "August 17, 2022":
+        - in the index.html change the line:
+        - FROM:
+            * <small class="text-muted">{{ post.date_posted }}</small>
+        - TO:
+            * <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+
+
 ## Show 'success' message:
     -> after successfully submit data, show the 'success' message 
         - in the 'basic_app/views.py' import 'django messages'
