@@ -814,3 +814,13 @@
         *            <button class="btn btn-outline-info" type="submit">Update</button>
         *        </div>
         *  </form>
+
+
+## adding author's profile-image into the home-page's posts 
+    -> in the 'templates/blog/index.html' add this line
+        * <article class="media content-section">
+        *     <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+        *     <div class="media-body">
+        *         .......
+        *     </div>
+        * </article>
