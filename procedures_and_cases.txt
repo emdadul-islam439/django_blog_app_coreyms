@@ -610,3 +610,26 @@
             *     <a class="nav-item nav-link" href={%url 'login'%}>Login</a>
             *     <a class="nav-item nav-link" href={%url 'register'%}>Register</a>
             * {% endif %}
+
+
+## Creating Profile Page & adding "@login_required"
+    -> in 'templates/users/' folder create 'profile.html' file
+        - add these lines of code:
+            * {% extends "blog/base.html" %}
+            * {% load crispy_forms_tags %}
+            * {% block content %}
+            *     <h1>User Name: {{ user.username }}</h1>
+            * {% endblock content %}
+    -> in "django_project/urls.py" add 'profile' url 
+        * urlpatterns = [
+        *     ......
+        *     path('profile/', user_views.profile, name = "profile"),
+        *     .....
+        * ]
+    -> in "users/views.py" add 'profile(..)' with '@login_required'
+        * from django.contrib.auth.decorators import login_required
+        * @login_required
+        * def profile(request):
+        *     return render(request, "users/profile.html")
+    -> in 'django_project/settings.py' add this into very-last line:
+        * LOGIN_URL = "login"
