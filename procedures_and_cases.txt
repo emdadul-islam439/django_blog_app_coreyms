@@ -803,7 +803,7 @@
 
     
     -> in the 'templates/users/profile.html', add these lines from "<!-- From here --->"
-        * <form method="POST" enctype="mutipart/form-data">
+        * <form method="POST" enctype="multipart/form-data">
         *        {% csrf_token %}
         *        <fieldset class="form-group">
         *            <legend class="border-bottom mb-4">Update Profile</legend>
