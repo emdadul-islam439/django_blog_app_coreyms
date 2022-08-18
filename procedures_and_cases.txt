@@ -595,3 +595,18 @@
             *     path('logout/', auth_views.LoginView.as_view(template_name = "users/logout.html"), name = "logout"),
             *     ....
             * ]
+
+
+## Improving UI/UX:
+    -> linking nav-bar's 'login' & 'register':
+        - in 'templates/blog/base.html' modify these two lines 
+        - From:
+            *   <a class="nav-item nav-link" href="#">Login</a>
+            *   <a class="nav-item nav-link" href="#">Register</a> 
+        - To:
+            * {% if user.is_authenticated %}
+            *     <a class="nav-item nav-link" href={%url 'logout'%}>Logout</a>
+            * {% else %}ss
+            *     <a class="nav-item nav-link" href={%url 'login'%}>Login</a>
+            *     <a class="nav-item nav-link" href={%url 'register'%}>Register</a>
+            * {% endif %}
