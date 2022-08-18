@@ -683,5 +683,6 @@
         * MEDIA_URL = "/media/"
     -> now, delete all the 'profiles' from "http://127.0.0.1:8000/admin/users/profile/"
     -> recreate a 'profile', and there will be new directory called 'django_project/media' will appear in the file structure
-    -> delete the previous 'profile_pics' directory 
+
+    -> delete the previous 'profile_pics' directory [Did not finish, now finished it]
 
