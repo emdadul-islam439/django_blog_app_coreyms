@@ -722,3 +722,33 @@
     - this will add the 'media' into 'urlpatterns'
     
     -> don't FORGET to add a "Profile" object manually, to test the 'default.jpg' image's connection 
+
+
+## Create PROFILE along with CREATING USER- AUTOMATICALLY: 
+    - create 'signals.py' in 'django_project/users' folder 
+    - add these codes:
+        * from django.db.models.signals import post_save
+        * from django.contrib.auth.models import User
+        * from django.dispatch import receiver
+        * from users.models import Profile
+        * 
+        * 
+        * @receiver(post_save, sender = User)
+        * def create_profile(sender, instance, created, *kwargs):
+        *     if created:
+        *         Profile.objects.create(user = instance)
+        *     
+        *     
+        * @receiver(post_save, sender = User)    
+        * def save_profile(sender, instance, *kwargs):
+        *     instance.profile.save()
+    
+    - in 'users/apps.py/' add these codes
+        * class UsersConfig(AppConfig):
+        *   ....
+        *   ....
+        *
+        *   def ready(self):
+        *       import users.signals
+    
+    
