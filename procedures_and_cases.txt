@@ -655,3 +655,23 @@
         *
         * admin.site.register(Profile)
     
+
+## Working with 'Profile' model in SHELL 
+    >>> from django.contrib.auth.models import User
+    >>> user = User.objects.all()[0]
+    >>> user
+    <User: admin>
+    >>> user.profile
+    <Profile: admin profile>
+    >>> user.profile.image
+    <ImageFieldFile: profile_pics/Screenshot_20220116-105856.png>
+    
+    ---------------------------------
+    >>> image = user.profile.image
+    >>> image.width
+    720
+    >>> image.height
+    1440
+    >>> image.url
+    '/profile_pics/Screenshot_20220116-105856.png'
+    
