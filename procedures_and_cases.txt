@@ -382,6 +382,16 @@
 
 
 
+
+
+
+
+
+
+------------------------- ALMOST all new things ---------------------------
+
+
+
 ## created USERS app:
     -> created the 'users' app by the command:
         * python manage.py startapp users 
@@ -512,3 +522,76 @@
         - modify this: {{form|crispy}}}
     
     -> Reload the 'register' page, and the form will be looking beautiful and the error-texts will also be pretty
+
+
+
+## Work with django's POWERFUL AUTHENTICATION SYSTEM:
+    -> First Step: prepare 'templates/users/login.html' and link this with 'django_project/urls.py'
+        - copy-paste from 'register.html' and modify slightly 
+            * ....
+            * {% block content %}
+            *     <div class="content-section">
+            *         <form method="POST">
+            *             {% csrf_token %}
+            *             <fieldset class="form-group">
+            *                 <legend class="border-bottom mb-4">Log In</legend>
+            *                 {{ form|crispy }}
+            *             </fieldset>
+            *             <div class="form-group">
+            *                 <button class="btn btn-outline-info" type="submit">Login</button>
+            *             </div>
+            *         </form>
+            *         <div class="border-top pt-3">
+            *             <small class="text-muted">
+            *                 Need an account? <a class="ml-2" href={% url "register" %}>Sign Up Now</a>
+            *             </small>
+            *         </div>
+            *     </div>
+            * {% endblock content %}
+        
+        - add these lines in the 'django_project/urls.py'
+            * .....
+            * from django.contrib.auth import views as auth_views
+            * .....
+            * urlpatterns = [
+            *     ....
+            *     path('login/', auth_views.LoginView.as_view(template_name = "users/login.html"), name = "login"),
+            *     ....
+            * ]
+        
+        - add this line at the very last-line in 'django_project/settings.py'
+            * LOGIN_REDIRECT_URL = "blog-home"
+        
+    -> Second Step: modify REGISTER route
+        - modify 'templates/users/register.html' file
+            - From:
+                * Already Have An Account? <a class="ml-2" href="#">Sign In</a>
+            - To:
+                * Already Have An Account? <a class="ml-2" href={% url 'login' %}>Sign In</a> 
+        - modify 'users/views.py' files 
+            - From:
+                * messages.success(request, f"Your account has been created successfully! You can now login into your account.")
+                * return redirect('login')
+            - To:
+                * messages.success(request, f"Successfully logged in as {username}")
+                * return redirect('login')
+
+    -> Third Step: prepare 'templates/users/logout.html'and link this with 'django_project/urls.py'
+        - copy-paste from 'register.html' and modify
+            * {% extends "blog/base.html" %}
+            * {% block content %}
+            *     <h2>You have been logged out!</h2>
+            *     <div class="border-top pt-3">
+            *         <small class="text-muted">
+            *             <a href={% url 'login' %}>Log In again.</a>
+            *         </small>
+            *     </div>
+            * {% endblock content %} 
+
+        - add these lines in the 'django_project/urls.py'
+            * .....
+            * urlpatterns = [
+            *     ....
+            *     path('logout/', auth_views.LoginView.as_view(template_name = "users/logout.html"), name = "logout"),
+            *     ....
+            * ]
