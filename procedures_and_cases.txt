@@ -686,3 +686,34 @@
 
     -> delete the previous 'profile_pics' directory [Did not finish, now finished it]
 
+
+## update 'templates/users/profile.html' [ALREADY DONE TWO COMMITS AGO, but didn't documented then]
+    * {% block content %}
+    * <div class="content-section">
+    *     <div class="media">
+    *     <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+    *     <div class="media-body">
+    *         <h2 class="account-heading">{{ user.username }}</h2>
+    *         <p class="text-secondary">{{ user.email }}</p>
+    *     </div>
+    *     </div>
+    *     <!-- FORM HERE -->
+    * </div>
+    * {% endblock content %}
+
+
+## adding 'media' path into the 'urlpatterns'
+    - in the 'django_project/urls.py', add these lines
+    * ....
+    * from django.conf.urls.static import static
+    * from django.contrib.auth import views as auth_views
+    * ...
+    * urlpatterns = [
+    *    .....
+    * ]
+    *
+    * if settings.DEBUG:
+    *   urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    - this will add the 'media' into 'urlpatterns'
+
