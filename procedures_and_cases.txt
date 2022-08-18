@@ -751,4 +751,66 @@
         *   def ready(self):
         *       import users.signals
     
+
+## UPDATING models:
+    -> in 'users/forms.py' file, add these two form-class for updating user & profile:        
+        * class UserUpdateForm(forms.ModelForm):
+        *     email = forms.EmailField()
+        *     
+        *     class Meta:
+        *         model = User 
+        *         fields = ['username', 'email']
+        *         
+        *         
+        * class ProfileUpdateForm(forms.ModelForm):
+        *     class Meta:
+        *         model = Profile 
+        *         fields = ['image']
     
+
+    -> in 'users/views.py', modify the 'profile()' view
+        - From: 
+            * @login_required
+            * def profile(request):
+            *     return render(request, "users/profile.html", context)
+
+        - To:
+            * @login_required
+            * def profile(request):
+            *     if request.method == "POST":
+            *         u_form = UserUpdateForm(request.POST, 
+            *                                 instance=request.user)
+            *         p_form = ProfileUpdateForm(request.POST, 
+            *                                 request.FILES, 
+            *                                 instance=request.user.profile)
+            *         
+            *         if u_form.is_valid() and p_form.is_valid():
+            *             u_form.save()
+            *             p_form.save()
+            *             messages.success(request, f"Your account has been updated successfully!")
+            *             return redirect('profile')
+            *             
+            *     else:
+            *         u_form = UserUpdateForm(instance=request.user)
+            *         p_form = ProfileUpdateForm(instance=request.user.profile)
+            *     
+            *     context = {
+            *         "u_form" : u_form,
+            *         "p_form" : p_form
+            *     }
+            *     
+            *     return render(request, "users/profile.html", context)
+
+    
+    -> in the 'templates/users/profile.html', add these lines from "<!-- From here --->"
+        * <form method="POST" enctype="mutipart/form-data">
+        *        {% csrf_token %}
+        *        <fieldset class="form-group">
+        *            <legend class="border-bottom mb-4">Update Profile</legend>
+        *            {{ u_form|crispy }}
+        *            {{ p_form|crispy }}
+        *        </fieldset>
+        *        <div class="form-group">
+        *            <button class="btn btn-outline-info" type="submit">Update</button>
+        *        </div>
+        *  </form>
