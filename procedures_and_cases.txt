@@ -570,11 +570,15 @@
                 * Already Have An Account? <a class="ml-2" href={% url 'login' %}>Sign In</a> 
         - modify 'users/views.py' files 
             - From:
-                * messages.success(request, f"Your account has been created successfully! You can now login into your account.")
-                * return redirect('login')
+                * if form.is_valid():
+                *    messages.success(request, f"Your account has been created successfully! You can now login into your account.")
+                *    return redirect('login')
             - To:
-                * messages.success(request, f"Successfully logged in as {username}")
-                * return redirect('login')
+                * if form.is_valid():
+                *    form.save()
+                *    username = form.cleaned_data.get('username')
+                *    messages.success(request, f"Your account has been created successfully! You can now login into your account.")
+                *    return redirect('login')
 
     -> Third Step: prepare 'templates/users/logout.html'and link this with 'django_project/urls.py'
         - copy-paste from 'register.html' and modify
