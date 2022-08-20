@@ -864,6 +864,12 @@
         *     .....
         * ]
 
+    -> in "index.html", complete the 'href'-tag 
+        - From: 
+            * <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+        - To:
+            * <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+
 
 ## Creating "Post_Detail" view:
     -> in "blog/views.py" add these lines
@@ -882,5 +888,86 @@
         *     path("post/<int:pk>/", PostDetailView.as_view(), name = "post-detail"),
         *     .....
         * ]
+
+    -> in "templates/blog/" create "post_detail.html" and copy-paste codes from 'index.html'. refined code-snippet will be:
+        * {% extends "blog/base.html" %}
+        * {% block content %}
+        *     <article class="media content-section">
+        *         <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}">
+        *         <div class="media-body">
+        *         <div class="article-metadata">
+        *             <a class="mr-2" href="#">{{ object.author }}</a>
+        *             <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        *         </div>
+        *         <h2 class="article-title">{{ object.title }}</h2>
+        *         <p class="article-content">{{ object.content }}</p>
+        *         </div>
+        *     </article>
+        * {% endblock content %}
     
     -> go to the "http://127.0.0.1:8000/post/1/" link, and you will find the post detail of id-1 post 
+
+
+
+## Actually Creating a post ("CREATE_POST"):
+    ->  in "blog/views.py" create a class called 'PostCreateView'
+        * "class PostCreateView(CreateView):"
+        -  set the 'model' and 'fields' (it'will contain post-creation form):
+            * model = Post
+            * fields = ["title", "content"]
+        -  set the  'author'
+            * class PostCreateView(CreateView):
+            *   .....  
+            *   def form_valid(self, form):
+            *       form.instance.author = self.request.user
+            *       return super().form_valid(form)
+
+        - the whole 'Post Create View" will be:
+            * class PostCreateView(CreateView):
+            *   model = Post
+            *   fields = ["title", "content"]
+            *   
+            *   def form_valid(self, form):
+            *       form.instance.author = self.request.user
+            *       return super().form_valid(form)
+
+
+    -> in "blog/urls.py" add the 'post creation url'
+        * urlpatterns = [
+        *     ....
+        *     path("post/new/", PostCreateView.as_view(), name = "post-create"),
+        *     ....
+        * ]
+    
+
+    -> in "templates/blog/" folder create 'post_form.html' file:
+        * {% extends "blog/base.html" %}
+        * {% load crispy_forms_tags %}
+        * {% block content %}
+        *     <div class="content-section">
+        *         <form method="POST">
+        *             {% csrf_token %}
+        *             <fieldset class="form-group">
+        *                 <legend class="border-bottom mb-4">Create Post</legend>
+        *                 {{ form|crispy }}
+        *             </fieldset>
+        *             <div class="form-group">
+        *                 <button class="btn btn-outline-info" type="submit">Post</button>
+        *             </div>
+        *         </form>
+        *     </div>
+        * {% endblock content %}
+
+    
+    -> in "blog/models.py" add these lines:
+        * from django.urls import reverse
+        * class Post(models.Model):
+        *   ....
+        *   ....
+        *   def __str__(self) -> str:
+        *       ......
+        *   
+        *   def get_absolute_url(self):
+        *       return reverse('post-detail', kwargs={"pk" : self.pk})
+
+    

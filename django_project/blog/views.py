@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from blog.models import Post
 
 # Create your views here.
@@ -12,12 +12,23 @@ def home(request):
 
 class PostListview(ListView):
     model = Post
-    template_name: str = "blog/home.html"    #<app>/<model>_<viewtype>.html
+    template_name: str = "blog/index.html"    #<app>/<model>_<viewtype>.html
     context_object_name: str = "posts"
     ordering = ['-date_posted']
 
+
 class PostDetailView(DetailView):
     model = Post
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ["title", "content"]
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
 
 
 def about(request):
