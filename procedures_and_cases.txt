@@ -979,3 +979,35 @@
             * "class PostCreateView(CreateView):"
         - To:
             * "class PostCreateView(LoginRequiredMixin, CreateView):" 
+
+
+## Creating "update post" and using "UserPassesTestMixin":
+    -> in 'blog/views.py', create 'PostUpdateView' [copy-pasting from 'CreatePostView"]
+        * class PostUpdateView(LoginRequiredMixin, UpdateView):
+        *   model = Post
+        *   fields = ["title", "content"]
+        * 
+        *   def form_valid(self, form):
+        *       form.instance.author = self.request.user
+        *       return super().form_valid(form)
+    
+    -> in 'blog/urls.py', add an 'update' url:
+        * urlpatterns = [
+        *     ....
+        *     path("post/<int:pk>/update/", PostUpdateView.as_view(), name = "post-update"),
+        *     ....
+        * ]
+    
+    -> add 'UserPassesTestMixin':
+        - From:
+            * class PostUpdateView(LoginRequiredMixin, UpdateView):
+            *     ......
+        - To:
+            * class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+            *      ......
+            *      def test_func(self):
+            *          post = self.get_object()
+            *          if post.author == self.request.user:
+            *              return True
+            *          return False
+            
