@@ -1071,3 +1071,25 @@
         *         </div>
         *     {% endif %}
         * </div>
+
+
+## Importing items from JSON file:
+    -> in the root 'django_project/' folder, create 'post.json' file
+        - copy-paste the json texts from the below link: 
+        - LinK: https://github.com/CoreyMSchafer/code_snippets/blob/master/Django_Blog/11-Pagination/django_project/posts.json
+    
+    -> Open python shell using: "python manage.py shell" command
+        - write these commands:
+
+        >>> import json
+        >>> from blog.models import Post
+        >>> with open('posts.json') as f:
+        ...   posts_json = json.load(f)
+        ... 
+        >>> for post in posts_json:
+        ...   post = Post(title = post['title'], content = post['content'], author_id = post['user_id'])
+        ...   post.save()
+        ... 
+        >>> exit()
+    
+    -> Hurrah!! all the 'posts' has been loaded into the DB
