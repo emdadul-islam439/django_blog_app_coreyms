@@ -1050,4 +1050,24 @@
         *     </div>
         * {% endblock content %}
 
-    -> 
+
+## Connecting all the 'create', 'update', 'delete' links into the 'blog-site'
+    -> in 'templates/blog/base.html' add this line:
+            *<div class="navbar-nav">
+            *   {% if user.is_authenticated %}
+            *       <a class="nav-item nav-link" href={%url 'post-create'%}>Create Post</a>
+            *       ......
+            *   {% else %}
+            *       ......
+            *   {% endif %}
+            *</div>
+    -> in 'templates/blog/post_details.html', add these lines:
+        * <div class="article-metadata">
+        *     .....
+        *     {% if object.author == user %}
+        *         <div>
+        *             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+        *             <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+        *         </div>
+        *     {% endif %}
+        * </div>
