@@ -1,6 +1,10 @@
 from django.contrib import admin
 from django.urls import path
-from blog.views import PostListview, PostDetailView, PostCreateView
+from blog.views import (
+    PostListview, 
+    PostDetailView, 
+    PostCreateView
+)
 from blog import views
 
 urlpatterns = [

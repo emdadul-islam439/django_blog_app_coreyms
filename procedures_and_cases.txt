@@ -971,3 +971,11 @@
         *       return reverse('post-detail', kwargs={"pk" : self.pk})
 
     
+## adding "Login Required" requirement into the 'CreatePostView'
+    -> in 'blog/views.py', import 'LoginRequiredMixin'
+        * "from django.contrib.auth.mixins import LoginRequiredMixin"
+    -> add "LoginRequiredMixin" into the parameter list of 'CreatePostView'
+        - From:
+            * "class PostCreateView(CreateView):"
+        - To:
+            * "class PostCreateView(LoginRequiredMixin, CreateView):" 
