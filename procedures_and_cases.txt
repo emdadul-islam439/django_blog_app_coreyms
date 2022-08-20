@@ -1131,7 +1131,7 @@
         *    ....
         *    paginate_by: int = 2
     
-    
+
     -> Now run the 'runserver' command and see that, there is only 2 posts into the home page
         - if you write this into address-bar, you will find another 2 posts,
         - "http://127.0.0.1:8000/?page=2" [have 3rd & 4th posts]
@@ -1168,3 +1168,5 @@
         * 
         *     {% endif %}
         * {% endblock content %}
+    
+    -> UPDATE: update the pagination: "paginate_by: int = 5"
