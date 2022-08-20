@@ -1170,3 +1170,46 @@
         * {% endblock content %}
     
     -> UPDATE: update the pagination: "paginate_by: int = 5"
+
+
+
+## Showing a user's all-posts:
+    -> in 'blog/views.py', add this view:
+        * from django.shortcuts import render, get_object_or_404
+        * from django.contrib.auth.models import User
+        *
+        * class UserPostListview(ListView):
+        *   model = Post
+        *   template_name: str = "blog/user_posts.html"  # <app>/<model>_<viewtype>.html
+        *   context_object_name: str = "posts"
+        *   paginate_by: int = 5
+        *   
+        *   def get_queryset(self):
+        *       user = get_object_or_404(User, username = self.kwargs.get("username"))
+        *       return Post.objects.filter(author = user).order_by("-date_posted")
+      
+    -> in 'blog/urls.py', add an 'delete' url:
+        * urlpatterns = [
+        *     ....
+        *     path("user/<str:username>", UserPostListview.as_view(), name = "user-posts"),
+        *     ....
+        * ]
+    
+    -> copy-paste the 'base.html' codes and modify like this:
+        * {% extends "blog/base.html" %}
+        * {% block content %}
+        *     <h1 class="mb-3"> Posts by "{{ view.kwargs.username }} ({{page_obj.paginator.count }})" </h1>
+        *     {% for post in posts %}
+        *         .....
+        *         <div class="media-body">
+        *             <div class="article-metadata">
+        *             <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+        *             ......
+        *         </div>
+        *         </article>
+        *     {% endfor %}
+        *     
+        *     {% if is_paginated %}
+        *       ...... 
+        *     {% endif %}
+        * {% endblock content %}
