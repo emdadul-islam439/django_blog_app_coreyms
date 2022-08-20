@@ -824,3 +824,42 @@
         *         .......
         *     </div>
         * </article>
+
+
+
+
+
+----------------------------- Starting with Class-Based VIEWS -----------------------------
+
+## We can transform our function-based views into class-based views, they do our different 'boiler-plate' tasks out-of-the box.
+    -> in 'blog/views.py' follow these steps to make a class-based view
+        - First, import the 'ListView'
+            * from django.views.generic import ListView
+        - Second, you will define a class which inherits from 'ListView'
+            * "class PostListview(ListView):"
+        - Third, you'will say the model-name, where the 'ListView' will work on 
+            * "model = Post"
+        - [OPTIONAL] Fourth, for the replacement of "render(request, template_name, context)" we write:
+            * template_name: str = "blog/home.html"    
+            * context_object_name: str = "posts"
+            ** by default 'django' use template_name = "<app>/<model>_<viewtype>.html" && context_object_name = "object"
+        - [OPTIONAL] Fifth, if you try to customize the ordering of the List-View [ascending to descending  etc.]:
+            * "ordering = ['-date_posted']"
+            ** by default it was: "ordering = ['-date_posted']"
+
+        - Full 'LIST-VIEW' at one place:
+        * class PostListview(ListView):
+        *    model = Post
+        *    template_name: str = "blog/home.html"    #<app>/<model>_<viewtype>.html
+        *    context_object_name: str = "posts"
+        *    ordering = ['-date_posted']
+    
+    -> in 'blog/urls.py', add these lines:
+        * ....
+        * from blog.views import PostListview
+        * ....
+        * urlpatterns = [
+        *     # path("", views.home, name = "blog-home"), #replacing this line with next line
+        *     path("", PostListview.as_view(), name = "blog-home"),
+        *     .....
+        * ]
