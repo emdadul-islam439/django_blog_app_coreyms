@@ -863,3 +863,24 @@
         *     path("", PostListview.as_view(), name = "blog-home"),
         *     .....
         * ]
+
+
+## Creating "Post_Detail" view:
+    -> in "blog/views.py" add these lines
+        * ....
+        * from django.views.generic import ListView, DetailView
+        * ....
+        * class PostDetailView(DetailView):
+        *     model = Post
+
+    -> in "blog/urls.py" add these lines
+        * ....
+        * from blog.views import PostListview, PostDetailView
+        * ....
+        * urlpatterns = [
+        *     .....
+        *     path("post/<int:pk>/", PostDetailView.as_view(), name = "post-detail"),
+        *     .....
+        * ]
+    
+    -> go to the "http://127.0.0.1:8000/post/1/" link, and you will find the post detail of id-1 post 
